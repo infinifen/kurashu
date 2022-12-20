@@ -27,12 +27,11 @@ void GetHungProcesses()
                                                   t.WaitReason == ThreadWaitReason.Suspended));
     foreach (var p in hung)
     {
-        Console.WriteLine($"{p.ProcessName} ({p.Id}) {p.MainModule.FileName} is hung");
+        Console.WriteLine($"{p.ProcessName} ({p.Id}) is hung");
         if (!trackedProcessIds.Contains(p.Id))
         {
             trackedProcessIds.Add(p.Id);
             p.EnableRaisingEvents = true;
-            Console.WriteLine("print");
             p.Exited += ((sender, eventArgs) =>
             {
                 trackedProcessIds.Remove(p.Id);
